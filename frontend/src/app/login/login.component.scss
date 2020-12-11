@@ -1,0 +1,13 @@
+.login-form {
+    display: inline-flex;
+    flex-direction: column;
+    margin-left: calc(50vw - 100px);
+    margin-top: calc(50vh - 50px);
+
+    >img {
+        width: 200px;
+        height: 100px;
+        object-fit: contain;
+        margin-bottom: 5px;
+    }
+}

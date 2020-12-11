@@ -86,6 +86,102 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./app.ts":
+/*!****************!*\
+  !*** ./app.ts ***!
+  \****************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\nvar __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\n    return new (P || (P = Promise))(function (resolve, reject) {\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\n        function rejected(value) { try { step(generator[\"throw\"](value)); } catch (e) { reject(e); } }\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\n    });\n};\nvar __generator = (this && this.__generator) || function (thisArg, body) {\n    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;\n    return g = { next: verb(0), \"throw\": verb(1), \"return\": verb(2) }, typeof Symbol === \"function\" && (g[Symbol.iterator] = function() { return this; }), g;\n    function verb(n) { return function (v) { return step([n, v]); }; }\n    function step(op) {\n        if (f) throw new TypeError(\"Generator is already executing.\");\n        while (_) try {\n            if (f = 1, y && (t = op[0] & 2 ? y[\"return\"] : op[0] ? y[\"throw\"] || ((t = y[\"return\"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;\n            if (y = 0, t) op = [op[0] & 2, t.value];\n            switch (op[0]) {\n                case 0: case 1: t = op; break;\n                case 4: _.label++; return { value: op[1], done: false };\n                case 5: _.label++; y = op[1]; op = [0]; continue;\n                case 7: op = _.ops.pop(); _.trys.pop(); continue;\n                default:\n                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }\n                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }\n                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }\n                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }\n                    if (t[2]) _.ops.pop();\n                    _.trys.pop(); continue;\n            }\n            op = body.call(thisArg, _);\n        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }\n        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };\n    }\n};\nvar __importDefault = (this && this.__importDefault) || function (mod) {\n    return (mod && mod.__esModule) ? mod : { \"default\": mod };\n};\nexports.__esModule = true;\nexports.connectToMongoDb = exports.mdbCollections = exports.mdb = exports.mdbClient = exports.app = void 0;\nvar express_1 = __importDefault(__webpack_require__(/*! express */ \"express\"));\n__webpack_require__(/*! express-async-errors */ \"express-async-errors\");\nvar mongodb_1 = __webpack_require__(/*! mongodb */ \"mongodb\");\nvar config_1 = __webpack_require__(/*! ./config */ \"./config.ts\");\n__webpack_require__(/*! source-map-support/register */ \"source-map-support/register\");\nvar source_map_support_1 = __importDefault(__webpack_require__(/*! source-map-support */ \"source-map-support\"));\nsource_map_support_1[\"default\"].install({\n    environment: 'node',\n    hookRequire: true,\n});\nexports.app = express_1[\"default\"]();\nfunction connectToMongoDb() {\n    return __awaiter(this, void 0, void 0, function () {\n        return __generator(this, function (_a) {\n            switch (_a.label) {\n                case 0:\n                    exports.mdbClient = new mongodb_1.MongoClient(config_1.mdbConnectionString, { useUnifiedTopology: true });\n                    return [4 /*yield*/, exports.mdbClient.connect()];\n                case 1:\n                    _a.sent();\n                    exports.mdb = exports.mdbClient.db();\n                    exports.mdbCollections = {\n                        clientUsers: exports.mdb.collection(\"clientUsers\")\n                    };\n                    return [2 /*return*/];\n            }\n        });\n    });\n}\nexports.connectToMongoDb = connectToMongoDb;\n\n\n//# sourceURL=webpack:///./app.ts?");
+
+/***/ }),
+
+/***/ "./common/authUtils.ts":
+/*!*****************************!*\
+  !*** ./common/authUtils.ts ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\nvar __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {\n    if (k2 === undefined) k2 = k;\n    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });\n}) : (function(o, m, k, k2) {\n    if (k2 === undefined) k2 = k;\n    o[k2] = m[k];\n}));\nvar __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {\n    Object.defineProperty(o, \"default\", { enumerable: true, value: v });\n}) : function(o, v) {\n    o[\"default\"] = v;\n});\nvar __importStar = (this && this.__importStar) || function (mod) {\n    if (mod && mod.__esModule) return mod;\n    var result = {};\n    if (mod != null) for (var k in mod) if (k !== \"default\" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);\n    __setModuleDefault(result, mod);\n    return result;\n};\nexports.__esModule = true;\nexports.decodeToken = exports.createToken = exports.TokenData = void 0;\nvar uuid = __importStar(__webpack_require__(/*! uuid */ \"uuid\"));\nvar TokenData = /** @class */ (function () {\n    function TokenData(id, salt) {\n        this.id = id;\n        this.salt = salt;\n    }\n    return TokenData;\n}());\nexports.TokenData = TokenData;\nfunction createToken(userId) {\n    return Buffer.from(JSON.stringify(new TokenData(userId + \"\", uuid.v4()))).toString(\"base64\");\n}\nexports.createToken = createToken;\nfunction decodeToken(token) {\n    try {\n        return JSON.parse(Buffer.from(token, \"base64\").toString(\"utf8\"));\n    }\n    catch (err) {\n        // console.log(err);\n        return null;\n    }\n}\nexports.decodeToken = decodeToken;\n\n\n//# sourceURL=webpack:///./common/authUtils.ts?");
+
+/***/ }),
+
+/***/ "./config.ts":
+/*!*******************!*\
+  !*** ./config.ts ***!
+  \*******************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\nexports.__esModule = true;\nexports.cookiesDefaultOptions = exports.headersNames = exports.gAuthConfig = exports.serverConfig = exports.mdbConnectionString = void 0;\nexports.mdbConnectionString = \"mongodb+srv://user001:H9wUBPsdmspef63c@cluster001-sgsi2.mongodb.net/main?retryWrites=true&w=majority\";\nexports.serverConfig = new /** @class */ (function () {\n    function class_1() {\n        this.production = false;\n        this.protocol = this.production ? \"https\" : \"http\";\n        this.host = this.production ? \"node-chat-001.herokuapp.com\" : \"localhost\";\n        this.port = this.production ? 80 : 5000;\n        this.uri = this.protocol + \"://\" + this.host + (this.port !== 80 ? \":\" + this.port : \"\");\n    }\n    return class_1;\n}());\nexports.gAuthConfig = {\n    clientId: \"542989413324-vibeh8n200fvnm60gshdq5ujfrkpqbqh.apps.googleusercontent.com\",\n    clientSecret: \"S1myRkzryHSeh46SgvXsPRya\"\n};\nexports.headersNames = {\n    identityToken: \"authorization\"\n};\nexports.cookiesDefaultOptions = {\n    path: \"/\",\n    maxAge: 315360000,\n    secure: exports.serverConfig.protocol === \"https\",\n    sameSite: \"lax\",\n    httpOnly: true\n};\n\n\n//# sourceURL=webpack:///./config.ts?");
+
+/***/ }),
+
+/***/ "./controllers/client/auth/checkToken.ts":
+/*!***********************************************!*\
+  !*** ./controllers/client/auth/checkToken.ts ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\nvar __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\n    return new (P || (P = Promise))(function (resolve, reject) {\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\n        function rejected(value) { try { step(generator[\"throw\"](value)); } catch (e) { reject(e); } }\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\n    });\n};\nvar __generator = (this && this.__generator) || function (thisArg, body) {\n    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;\n    return g = { next: verb(0), \"throw\": verb(1), \"return\": verb(2) }, typeof Symbol === \"function\" && (g[Symbol.iterator] = function() { return this; }), g;\n    function verb(n) { return function (v) { return step([n, v]); }; }\n    function step(op) {\n        if (f) throw new TypeError(\"Generator is already executing.\");\n        while (_) try {\n            if (f = 1, y && (t = op[0] & 2 ? y[\"return\"] : op[0] ? y[\"throw\"] || ((t = y[\"return\"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;\n            if (y = 0, t) op = [op[0] & 2, t.value];\n            switch (op[0]) {\n                case 0: case 1: t = op; break;\n                case 4: _.label++; return { value: op[1], done: false };\n                case 5: _.label++; y = op[1]; op = [0]; continue;\n                case 7: op = _.ops.pop(); _.trys.pop(); continue;\n                default:\n                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }\n                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }\n                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }\n                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }\n                    if (t[2]) _.ops.pop();\n                    _.trys.pop(); continue;\n            }\n            op = body.call(thisArg, _);\n        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }\n        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };\n    }\n};\nexports.__esModule = true;\nexports.checkTokenRoute = exports.checkTokenInterceptor = void 0;\nvar app_1 = __webpack_require__(/*! ../../../app */ \"./app.ts\");\nvar config_1 = __webpack_require__(/*! ../../../config */ \"./config.ts\");\nvar authUtils_1 = __webpack_require__(/*! ../../../common/authUtils */ \"./common/authUtils.ts\");\nvar mongodb_1 = __webpack_require__(/*! mongodb */ \"mongodb\");\nfunction checkTokenInterceptor(req, resp, next) {\n    return __awaiter(this, void 0, void 0, function () {\n        return __generator(this, function (_a) {\n            switch (_a.label) {\n                case 0: return [4 /*yield*/, checkToken(req)];\n                case 1:\n                    _a.sent();\n                    next();\n                    return [2 /*return*/];\n            }\n        });\n    });\n}\nexports.checkTokenInterceptor = checkTokenInterceptor;\nfunction checkTokenRoute(req, resp) {\n    return __awaiter(this, void 0, void 0, function () {\n        return __generator(this, function (_a) {\n            switch (_a.label) {\n                case 0: return [4 /*yield*/, checkToken(req)];\n                case 1:\n                    _a.sent();\n                    resp.send(\"\");\n                    return [2 /*return*/];\n            }\n        });\n    });\n}\nexports.checkTokenRoute = checkTokenRoute;\nfunction checkToken(req) {\n    return __awaiter(this, void 0, void 0, function () {\n        var tokenData, _a;\n        return __generator(this, function (_b) {\n            switch (_b.label) {\n                case 0:\n                    tokenData = authUtils_1.decodeToken(req.headers[config_1.headersNames.identityToken]);\n                    if (!tokenData)\n                        throw \"Token check failed 1\";\n                    _a = req;\n                    return [4 /*yield*/, app_1.mdbCollections.clientUsers.findOne({\n                            _id: new mongodb_1.ObjectId(tokenData.id),\n                            token: req.headers[config_1.headersNames.identityToken]\n                        })];\n                case 1:\n                    _a.user = _b.sent();\n                    if (!req.user)\n                        throw \"Token check failed 2\";\n                    return [2 /*return*/];\n            }\n        });\n    });\n}\n\n\n//# sourceURL=webpack:///./controllers/client/auth/checkToken.ts?");
+
+/***/ }),
+
+/***/ "./controllers/client/auth/loginFromGoogle.ts":
+/*!****************************************************!*\
+  !*** ./controllers/client/auth/loginFromGoogle.ts ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\nvar __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {\n    if (k2 === undefined) k2 = k;\n    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });\n}) : (function(o, m, k, k2) {\n    if (k2 === undefined) k2 = k;\n    o[k2] = m[k];\n}));\nvar __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {\n    Object.defineProperty(o, \"default\", { enumerable: true, value: v });\n}) : function(o, v) {\n    o[\"default\"] = v;\n});\nvar __importStar = (this && this.__importStar) || function (mod) {\n    if (mod && mod.__esModule) return mod;\n    var result = {};\n    if (mod != null) for (var k in mod) if (k !== \"default\" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);\n    __setModuleDefault(result, mod);\n    return result;\n};\nvar __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\n    return new (P || (P = Promise))(function (resolve, reject) {\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\n        function rejected(value) { try { step(generator[\"throw\"](value)); } catch (e) { reject(e); } }\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\n    });\n};\nvar __generator = (this && this.__generator) || function (thisArg, body) {\n    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;\n    return g = { next: verb(0), \"throw\": verb(1), \"return\": verb(2) }, typeof Symbol === \"function\" && (g[Symbol.iterator] = function() { return this; }), g;\n    function verb(n) { return function (v) { return step([n, v]); }; }\n    function step(op) {\n        if (f) throw new TypeError(\"Generator is already executing.\");\n        while (_) try {\n            if (f = 1, y && (t = op[0] & 2 ? y[\"return\"] : op[0] ? y[\"throw\"] || ((t = y[\"return\"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;\n            if (y = 0, t) op = [op[0] & 2, t.value];\n            switch (op[0]) {\n                case 0: case 1: t = op; break;\n                case 4: _.label++; return { value: op[1], done: false };\n                case 5: _.label++; y = op[1]; op = [0]; continue;\n                case 7: op = _.ops.pop(); _.trys.pop(); continue;\n                default:\n                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }\n                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }\n                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }\n                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }\n                    if (t[2]) _.ops.pop();\n                    _.trys.pop(); continue;\n            }\n            op = body.call(thisArg, _);\n        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }\n        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };\n    }\n};\nvar __importDefault = (this && this.__importDefault) || function (mod) {\n    return (mod && mod.__esModule) ? mod : { \"default\": mod };\n};\nexports.__esModule = true;\nexports.loginFromGoogleStep2 = exports.loginFromGoogleStep1 = void 0;\nvar node_fetch_1 = __importDefault(__webpack_require__(/*! node-fetch */ \"node-fetch\"));\nvar querystring_1 = __importDefault(__webpack_require__(/*! querystring */ \"querystring\"));\nvar config_1 = __webpack_require__(/*! ../../../config */ \"./config.ts\");\nvar uuid = __importStar(__webpack_require__(/*! uuid */ \"uuid\"));\nvar jsonwebtoken_1 = __importDefault(__webpack_require__(/*! jsonwebtoken */ \"jsonwebtoken\"));\nvar jwks_rsa_1 = __importDefault(__webpack_require__(/*! jwks-rsa */ \"jwks-rsa\"));\nvar app_1 = __webpack_require__(/*! ../../../app */ \"./app.ts\");\nvar clientUser_1 = __webpack_require__(/*! ../../../models/clientUser */ \"./models/clientUser.ts\");\nvar authUtils_1 = __webpack_require__(/*! ../../../common/authUtils */ \"./common/authUtils.ts\");\nvar discoveryDoc;\nnode_fetch_1[\"default\"](\"https://accounts.google.com/.well-known/openid-configuration\").then(function (resp) { return __awaiter(void 0, void 0, void 0, function () {\n    return __generator(this, function (_a) {\n        switch (_a.label) {\n            case 0:\n                if (!!resp.ok) return [3 /*break*/, 1];\n                throw \"DiscoveryDoc status not is ok\";\n            case 1: return [4 /*yield*/, resp.json()];\n            case 2:\n                discoveryDoc = _a.sent();\n                _a.label = 3;\n            case 3: return [2 /*return*/];\n        }\n    });\n}); });\nfunction loginFromGoogleStep1(req, resp) {\n    req.session.state = JSON.stringify({\n        salt: uuid.v4(),\n    });\n    req.session.nonce = uuid.v4();\n    resp.redirect(discoveryDoc.authorization_endpoint + \"?\" + querystring_1[\"default\"].stringify({\n        client_id: config_1.gAuthConfig.clientId,\n        nonce: req.session.nonce,\n        state: req.session.state,\n        response_type: \"code\",\n        scope: \"openid email\",\n        redirect_uri: config_1.serverConfig.uri + \"/client/loginFromGoogleStep2\"\n    }));\n}\nexports.loginFromGoogleStep1 = loginFromGoogleStep1;\nfunction loginFromGoogleStep2(req, resp) {\n    return __awaiter(this, void 0, void 0, function () {\n        var data, idTokenData, user, _a, newToken;\n        return __generator(this, function (_b) {\n            switch (_b.label) {\n                case 0:\n                    if (req.query.error)\n                        throw \"Error: \" + req.query.error + \". Details: \" + req.query.error_description + \".\";\n                    if (req.query.state !== req.session.state)\n                        throw \"Invalid state parameter.\";\n                    return [4 /*yield*/, node_fetch_1[\"default\"](discoveryDoc.token_endpoint, {\n                            body: JSON.stringify({\n                                code: req.query.code,\n                                client_id: config_1.gAuthConfig.clientId,\n                                client_secret: config_1.gAuthConfig.clientSecret,\n                                redirect_uri: config_1.serverConfig.uri + \"/client/loginFromGoogleStep2\",\n                                grant_type: \"authorization_code\"\n                            }),\n                            method: \"POST\"\n                        })];\n                case 1: return [4 /*yield*/, (_b.sent()).json()];\n                case 2:\n                    data = _b.sent();\n                    if (data.error)\n                        throw \"Error: \" + data.error + \". Details: \" + data.error_description + \".\";\n                    idTokenData = jsonwebtoken_1[\"default\"].decode(data.id_token, { complete: true, json: true });\n                    if (idTokenData.payload.nonce !== req.session.nonce)\n                        throw \"Invalid nonce parameter.\";\n                    verifiIdToken(data.id_token, idTokenData);\n                    req.session.state = null;\n                    req.session.nonce = null;\n                    return [4 /*yield*/, app_1.mdbCollections.clientUsers.findOne({ email: idTokenData.payload.email })];\n                case 3:\n                    user = _b.sent();\n                    if (!!user) return [3 /*break*/, 5];\n                    user = new clientUser_1.ClientUser(idTokenData.payload.email);\n                    _a = user;\n                    return [4 /*yield*/, app_1.mdbCollections.clientUsers.insertOne(user)];\n                case 4:\n                    _a._id = (_b.sent()).insertedId;\n                    _b.label = 5;\n                case 5:\n                    newToken = authUtils_1.createToken(user._id);\n                    app_1.mdbCollections.clientUsers.updateOne({ _id: user._id }, { $set: { token: newToken } });\n                    user.token = newToken;\n                    resp.send(\"<script>\\n                    window.opener.postMessage(\\\"\" + newToken + \"\\\", \\\"*\\\");\\n                    window.close();\\n                </script>\");\n                    return [2 /*return*/];\n            }\n        });\n    });\n}\nexports.loginFromGoogleStep2 = loginFromGoogleStep2;\nfunction verifiIdToken(idToken, idTokenData) {\n    jwks_rsa_1[\"default\"]({ jwksUri: discoveryDoc.jwks_uri }).getSigningKey(idTokenData.header.kid, function (err, key) {\n        if (err)\n            throw \"Error: \" + err;\n        jsonwebtoken_1[\"default\"].verify(idToken, key.getPublicKey(), { algorithms: [idTokenData.header.alg] }, function (err) {\n            if (err)\n                throw \"Error: \" + err;\n        });\n    });\n}\n\n\n//# sourceURL=webpack:///./controllers/client/auth/loginFromGoogle.ts?");
+
+/***/ }),
+
+/***/ "./controllers/client/auth/logout.ts":
+/*!*******************************************!*\
+  !*** ./controllers/client/auth/logout.ts ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\nvar __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\n    return new (P || (P = Promise))(function (resolve, reject) {\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\n        function rejected(value) { try { step(generator[\"throw\"](value)); } catch (e) { reject(e); } }\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\n    });\n};\nvar __generator = (this && this.__generator) || function (thisArg, body) {\n    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;\n    return g = { next: verb(0), \"throw\": verb(1), \"return\": verb(2) }, typeof Symbol === \"function\" && (g[Symbol.iterator] = function() { return this; }), g;\n    function verb(n) { return function (v) { return step([n, v]); }; }\n    function step(op) {\n        if (f) throw new TypeError(\"Generator is already executing.\");\n        while (_) try {\n            if (f = 1, y && (t = op[0] & 2 ? y[\"return\"] : op[0] ? y[\"throw\"] || ((t = y[\"return\"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;\n            if (y = 0, t) op = [op[0] & 2, t.value];\n            switch (op[0]) {\n                case 0: case 1: t = op; break;\n                case 4: _.label++; return { value: op[1], done: false };\n                case 5: _.label++; y = op[1]; op = [0]; continue;\n                case 7: op = _.ops.pop(); _.trys.pop(); continue;\n                default:\n                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }\n                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }\n                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }\n                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }\n                    if (t[2]) _.ops.pop();\n                    _.trys.pop(); continue;\n            }\n            op = body.call(thisArg, _);\n        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }\n        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };\n    }\n};\nexports.__esModule = true;\nexports.logout = void 0;\nvar app_1 = __webpack_require__(/*! ../../../app */ \"./app.ts\");\nfunction logout(req, resp) {\n    return __awaiter(this, void 0, void 0, function () {\n        return __generator(this, function (_a) {\n            switch (_a.label) {\n                case 0: return [4 /*yield*/, app_1.mdbCollections.clientUsers.updateOne({ _id: req.user._id, }, { $set: { token: null } })];\n                case 1:\n                    _a.sent();\n                    resp.send(\"\");\n                    return [2 /*return*/];\n            }\n        });\n    });\n}\nexports.logout = logout;\n\n\n//# sourceURL=webpack:///./controllers/client/auth/logout.ts?");
+
+/***/ }),
+
+/***/ "./models/clientUser.ts":
+/*!******************************!*\
+  !*** ./models/clientUser.ts ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\nexports.__esModule = true;\nexports.ClientUser = void 0;\nvar ClientUser = /** @class */ (function () {\n    function ClientUser(email) {\n        this.token = null;\n        this.email = email;\n    }\n    return ClientUser;\n}());\nexports.ClientUser = ClientUser;\n\n\n//# sourceURL=webpack:///./models/clientUser.ts?");
+
+/***/ }),
+
+/***/ "./routes/client.ts":
+/*!**************************!*\
+  !*** ./routes/client.ts ***!
+  \**************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\nexports.__esModule = true;\nexports.clientRouter = void 0;\nvar express_1 = __webpack_require__(/*! express */ \"express\");\nvar loginFromGoogle_1 = __webpack_require__(/*! ../controllers/client/auth/loginFromGoogle */ \"./controllers/client/auth/loginFromGoogle.ts\");\nvar checkToken_1 = __webpack_require__(/*! ../controllers/client/auth/checkToken */ \"./controllers/client/auth/checkToken.ts\");\nvar logout_1 = __webpack_require__(/*! ../controllers/client/auth/logout */ \"./controllers/client/auth/logout.ts\");\nexports.clientRouter = express_1.Router();\nexports.clientRouter.get(\"/loginFromGoogleStep1\", loginFromGoogle_1.loginFromGoogleStep1);\nexports.clientRouter.get(\"/loginFromGoogleStep2\", loginFromGoogle_1.loginFromGoogleStep2);\nexports.clientRouter.get(\"/checkToken\", checkToken_1.checkTokenRoute);\nexports.clientRouter.get(\"/logout\", checkToken_1.checkTokenInterceptor, logout_1.logout);\n\n\n//# sourceURL=webpack:///./routes/client.ts?");
+
+/***/ }),
+
 /***/ "./run.ts":
 /*!****************!*\
   !*** ./run.ts ***!
@@ -94,7 +190,29 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\nvar __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\n    return new (P || (P = Promise))(function (resolve, reject) {\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\n        function rejected(value) { try { step(generator[\"throw\"](value)); } catch (e) { reject(e); } }\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\n    });\n};\nvar __generator = (this && this.__generator) || function (thisArg, body) {\n    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;\n    return g = { next: verb(0), \"throw\": verb(1), \"return\": verb(2) }, typeof Symbol === \"function\" && (g[Symbol.iterator] = function() { return this; }), g;\n    function verb(n) { return function (v) { return step([n, v]); }; }\n    function step(op) {\n        if (f) throw new TypeError(\"Generator is already executing.\");\n        while (_) try {\n            if (f = 1, y && (t = op[0] & 2 ? y[\"return\"] : op[0] ? y[\"throw\"] || ((t = y[\"return\"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;\n            if (y = 0, t) op = [op[0] & 2, t.value];\n            switch (op[0]) {\n                case 0: case 1: t = op; break;\n                case 4: _.label++; return { value: op[1], done: false };\n                case 5: _.label++; y = op[1]; op = [0]; continue;\n                case 7: op = _.ops.pop(); _.trys.pop(); continue;\n                default:\n                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }\n                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }\n                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }\n                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }\n                    if (t[2]) _.ops.pop();\n                    _.trys.pop(); continue;\n            }\n            op = body.call(thisArg, _);\n        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }\n        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };\n    }\n};\nvar __importDefault = (this && this.__importDefault) || function (mod) {\n    return (mod && mod.__esModule) ? mod : { \"default\": mod };\n};\nexports.__esModule = true;\nvar express_1 = __importDefault(__webpack_require__(/*! express */ \"express\"));\nvar mongodb_1 = __webpack_require__(/*! mongodb */ \"mongodb\");\nvar app = express_1[\"default\"]();\nvar mdbConfig = {\n    userName: \"user001\",\n    password: \"H9wUBPsdmspef63c\",\n    dbname: \"main\"\n};\nvar mdbClient = new mongodb_1.MongoClient(\"mongodb+srv://\" + mdbConfig.userName + \":\" + mdbConfig.password + \"@cluster001-sgsi2.mongodb.net/\" + mdbConfig.dbname + \"?retryWrites=true&w=majority\", { useUnifiedTopology: true });\nvar mdb;\nmdbClient.connect(function (err) {\n    if (err)\n        return console.log(err);\n    mdb = mdbClient.db();\n    console.log(\"MongoDb connected\");\n});\napp.get(\"/\", function (req, resp) { return __awaiter(void 0, void 0, void 0, function () {\n    var postsCollection, data;\n    return __generator(this, function (_a) {\n        switch (_a.label) {\n            case 0:\n                postsCollection = mdb.collection(\"posts\");\n                postsCollection.insertOne({ test: \"001\" });\n                return [4 /*yield*/, postsCollection.find().toArray()];\n            case 1:\n                data = _a.sent();\n                console.log(data);\n                resp.send(JSON.stringify(data));\n                return [2 /*return*/];\n        }\n    });\n}); });\nvar port = process.env.PORT || 5000;\napp.listen(port, function () {\n    console.log(\"Server started on port \" + port);\n});\n\n\n//# sourceURL=webpack:///./run.ts?");
+eval("\nvar __assign = (this && this.__assign) || function () {\n    __assign = Object.assign || function(t) {\n        for (var s, i = 1, n = arguments.length; i < n; i++) {\n            s = arguments[i];\n            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))\n                t[p] = s[p];\n        }\n        return t;\n    };\n    return __assign.apply(this, arguments);\n};\nvar __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\n    return new (P || (P = Promise))(function (resolve, reject) {\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\n        function rejected(value) { try { step(generator[\"throw\"](value)); } catch (e) { reject(e); } }\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\n    });\n};\nvar __generator = (this && this.__generator) || function (thisArg, body) {\n    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;\n    return g = { next: verb(0), \"throw\": verb(1), \"return\": verb(2) }, typeof Symbol === \"function\" && (g[Symbol.iterator] = function() { return this; }), g;\n    function verb(n) { return function (v) { return step([n, v]); }; }\n    function step(op) {\n        if (f) throw new TypeError(\"Generator is already executing.\");\n        while (_) try {\n            if (f = 1, y && (t = op[0] & 2 ? y[\"return\"] : op[0] ? y[\"throw\"] || ((t = y[\"return\"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;\n            if (y = 0, t) op = [op[0] & 2, t.value];\n            switch (op[0]) {\n                case 0: case 1: t = op; break;\n                case 4: _.label++; return { value: op[1], done: false };\n                case 5: _.label++; y = op[1]; op = [0]; continue;\n                case 7: op = _.ops.pop(); _.trys.pop(); continue;\n                default:\n                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }\n                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }\n                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }\n                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }\n                    if (t[2]) _.ops.pop();\n                    _.trys.pop(); continue;\n            }\n            op = body.call(thisArg, _);\n        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }\n        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };\n    }\n};\nvar __importDefault = (this && this.__importDefault) || function (mod) {\n    return (mod && mod.__esModule) ? mod : { \"default\": mod };\n};\nexports.__esModule = true;\nvar cors_1 = __importDefault(__webpack_require__(/*! cors */ \"cors\"));\nvar app_1 = __webpack_require__(/*! ./app */ \"./app.ts\");\nvar client_1 = __webpack_require__(/*! ./routes/client */ \"./routes/client.ts\");\nvar config_1 = __webpack_require__(/*! ./config */ \"./config.ts\");\nvar cookie_session_1 = __importDefault(__webpack_require__(/*! cookie-session */ \"cookie-session\"));\napp_1.app.use(cookie_session_1[\"default\"](__assign({ name: \"backendSession\", secret: \"2358143f-7e84-4cf5-a059-46c6aa8d1f9d\" }, config_1.cookiesDefaultOptions)));\napp_1.app.use(cors_1[\"default\"]());\napp_1.app.use(\"/client\", client_1.clientRouter);\n// app.get(\"/\", async (req: Request, resp: Response) => {\n//     const postsCollection = mdb.collection(\"posts\");\n//     postsCollection.insertOne({ test: \"001\" })\n//     const data = await postsCollection.find().toArray();\n//     console.log(data);\n//     resp.send(JSON.stringify(data));\n// });\n(function () { return __awaiter(void 0, void 0, void 0, function () {\n    return __generator(this, function (_a) {\n        switch (_a.label) {\n            case 0: return [4 /*yield*/, app_1.connectToMongoDb()];\n            case 1:\n                _a.sent();\n                app_1.app.listen(config_1.serverConfig.port, function () {\n                    console.log(\"Server started on \" + config_1.serverConfig.uri);\n                });\n                return [2 /*return*/];\n        }\n    });\n}); })();\n\n\n//# sourceURL=webpack:///./run.ts?");
+
+/***/ }),
+
+/***/ "cookie-session":
+/*!*********************************!*\
+  !*** external "cookie-session" ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports = require(\"cookie-session\");\n\n//# sourceURL=webpack:///external_%22cookie-session%22?");
+
+/***/ }),
+
+/***/ "cors":
+/*!***********************!*\
+  !*** external "cors" ***!
+  \***********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports = require(\"cors\");\n\n//# sourceURL=webpack:///external_%22cors%22?");
 
 /***/ }),
 
@@ -109,6 +227,39 @@ eval("module.exports = require(\"express\");\n\n//# sourceURL=webpack:///externa
 
 /***/ }),
 
+/***/ "express-async-errors":
+/*!***************************************!*\
+  !*** external "express-async-errors" ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports = require(\"express-async-errors\");\n\n//# sourceURL=webpack:///external_%22express-async-errors%22?");
+
+/***/ }),
+
+/***/ "jsonwebtoken":
+/*!*******************************!*\
+  !*** external "jsonwebtoken" ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports = require(\"jsonwebtoken\");\n\n//# sourceURL=webpack:///external_%22jsonwebtoken%22?");
+
+/***/ }),
+
+/***/ "jwks-rsa":
+/*!***************************!*\
+  !*** external "jwks-rsa" ***!
+  \***************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports = require(\"jwks-rsa\");\n\n//# sourceURL=webpack:///external_%22jwks-rsa%22?");
+
+/***/ }),
+
 /***/ "mongodb":
 /*!**************************!*\
   !*** external "mongodb" ***!
@@ -117,6 +268,61 @@ eval("module.exports = require(\"express\");\n\n//# sourceURL=webpack:///externa
 /***/ (function(module, exports) {
 
 eval("module.exports = require(\"mongodb\");\n\n//# sourceURL=webpack:///external_%22mongodb%22?");
+
+/***/ }),
+
+/***/ "node-fetch":
+/*!*****************************!*\
+  !*** external "node-fetch" ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports = require(\"node-fetch\");\n\n//# sourceURL=webpack:///external_%22node-fetch%22?");
+
+/***/ }),
+
+/***/ "querystring":
+/*!******************************!*\
+  !*** external "querystring" ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports = require(\"querystring\");\n\n//# sourceURL=webpack:///external_%22querystring%22?");
+
+/***/ }),
+
+/***/ "source-map-support":
+/*!*************************************!*\
+  !*** external "source-map-support" ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports = require(\"source-map-support\");\n\n//# sourceURL=webpack:///external_%22source-map-support%22?");
+
+/***/ }),
+
+/***/ "source-map-support/register":
+/*!**********************************************!*\
+  !*** external "source-map-support/register" ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports = require(\"source-map-support/register\");\n\n//# sourceURL=webpack:///external_%22source-map-support/register%22?");
+
+/***/ }),
+
+/***/ "uuid":
+/*!***********************!*\
+  !*** external "uuid" ***!
+  \***********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports = require(\"uuid\");\n\n//# sourceURL=webpack:///external_%22uuid%22?");
 
 /***/ })
 
