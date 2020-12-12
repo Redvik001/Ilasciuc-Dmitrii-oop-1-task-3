@@ -6,13 +6,16 @@ import { Injectable } from '@angular/core';
 export class UrlService {
 
     auth = {
-        login: "/client/loginFromGoogleStep1",
-        logout: "/client/logout",
-        checkToken: "/client/checkToken",
+        login: "/auth/loginFromGoogleStep1",
+        logout: "/auth/logout",
+        checkToken: "/auth/checkToken",
     }
 
-    resources = {
-
+    user = {
+        getUserTamagotchies: "/user/getUserTamagotchies",
+        createTamagotchi: "/user/createTamagotchi",
+        deleteTamagotchi: "/user/deleteTamagotchi",
+        changeLastWalkingDate: "/user/changeLastWalkingDate",
+        changeLastFeedingDate: "/user/changeLastFeedingDate"
     }
-
 }

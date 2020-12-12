@@ -23,12 +23,10 @@ export class AuthGuard implements CanActivate {
         return new Observable((observer: Observer<boolean>) => {
             this.http.get(this.urlS.auth.checkToken).subscribe(
                 value => {
-                    console.log(1)
                     observer.next(true);
                     observer.complete();
                 },
                 error => {
-                    console.log(2, error)
                     observer.next(false);
                     observer.complete();
                     this.authS.blockedUrl = state.url;

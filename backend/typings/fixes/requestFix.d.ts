@@ -6,6 +6,6 @@ declare namespace Express {
         /**
          * Fix! Объект текущего пользователя.
          */
-        user?: import("../../models/clientUser").ClientUser;
+        user?: import("../../models/user").User;
     }
 }

@@ -1,0 +1,50 @@
+<div class="comp-root">
+    <div class="sidebar-container">
+        <div class="sidebar-header">
+            <button pButton (click)="authS.logout()" label="Выйти"></button>
+            <button pButton icon="pi pi-plus" label="Добавить тамагочи"
+                (click)="addTamagotchiDialogShowFlag = true"></button>
+        </div>
+        <div class="sidebar-list">
+            <div class="list-item" *ngFor="let tamagotchi of tamagotchiesList" (click)="selectedTamagotchi = tamagotchi"
+                [ngClass]="{selected: selectedTamagotchi === tamagotchi}">
+                <div class="tamagotchi-name">{{tamagotchi.name}}</div>
+            </div>
+        </div>
+    </div>
+    <div class="selected-tamagotchi-container" *ngIf="selectedTamagotchi">
+        <div class="image-and-button-container">
+            <img [src]="getImgSrc()" class="tamagotchi-image">
+            <button pButton label="Удалить тамагочи" icon="pi pi-trash" (click)="deleteTamagotchi()"></button>
+        </div>
+        <div class="text-container">
+            <div>Возраст: {{selectedTamagotchiAge}}</div>
+            <div>Имя: {{selectedTamagotchi.name}}</div>
+            <div>Статус: <span
+                    class="{{selectedTamagotchi.isDeath ? 'error' : 'success'}}">{{selectedTamagotchi.isDeath ? "Мертв" : "Пока жив"}}</span>
+            </div>
+            <div
+                *ngIf="(selectedTamagotchi.type === 'dog' || selectedTamagotchi.type === 'cat' || selectedTamagotchi.type === 'parrot') && !selectedTamagotchi.isDeath">
+                <span>Нужно покормить через: {{selectedTamagotchiNextFeedingTime}}</span>
+                <button pButton label="Покормить" (click)="changeLastFeedingDate()"></button>
+            </div>
+            <div
+                *ngIf="(selectedTamagotchi.type === 'dog' || selectedTamagotchi.type === 'cat') && !selectedTamagotchi.isDeath">
+                <span>Нужно выгулять через: {{selectedTamagotchiNextWalkingTime}}</span>
+                <button pButton label="Выгулять" (click)="changeLastWalkingDate()"></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<p-dialog header="Создание тамагочи" [(visible)]="addTamagotchiDialogShowFlag" [modal]="true">
+    <input pInputText placeholder="Имя" [(ngModel)]="newTamagotchiData.name">
+    <select [(ngModel)]="newTamagotchiData.type">
+        <option value="dog">Пёс</option>
+        <option value="cat">Кот</option>
+        <option value="сobblestone">Булыжник</option>
+        <option value="parrot">Попугай</option>
+    </select>
+    <button pButton label="Создать" (click)="createTamagotchi()"></button>
+</p-dialog>

@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
 import fetch from "node-fetch";
 import querystring from "querystring";
-import { gAuthConfig, serverConfig } from "../../../config";
+import { gAuthConfig, serverConfig } from "../../config";
 import * as uuid from "uuid";
 import jwt from "jsonwebtoken";
 import jwksClient from 'jwks-rsa';
-import { mdbCollections } from "../../../app";
-import { ClientUser } from "../../../models/clientUser";
-import { createToken } from "../../../common/authUtils";
+import { mdbCollections } from "../../app";
+import { User } from "../../models/user";
+import { createToken } from "../../common/authUtils";
 
 let discoveryDoc: any;
 fetch("https://accounts.google.com/.well-known/openid-configuration").then(async (resp) => {
@@ -27,7 +27,7 @@ export function loginFromGoogleStep1(req: Request, resp: Response) {
         state: req.session.state,
         response_type: "code",
         scope: "openid email",
-        redirect_uri: serverConfig.uri + "/client/loginFromGoogleStep2"
+        redirect_uri: serverConfig.uri + "/auth/loginFromGoogleStep2"
     }));
 }
 
@@ -40,7 +40,7 @@ export async function loginFromGoogleStep2(req: Request, resp: Response) {
             code: req.query.code,
             client_id: gAuthConfig.clientId,
             client_secret: gAuthConfig.clientSecret,
-            redirect_uri: serverConfig.uri + "/client/loginFromGoogleStep2",
+            redirect_uri: serverConfig.uri + "/auth/loginFromGoogleStep2",
             grant_type: "authorization_code"
         }),
         method: "POST"
@@ -57,7 +57,7 @@ export async function loginFromGoogleStep2(req: Request, resp: Response) {
 
     let user = await mdbCollections.clientUsers.findOne({ email: idTokenData.payload.email });
     if (!user) {
-        user = new ClientUser(idTokenData.payload.email);
+        user = new User(idTokenData.payload.email);
         user._id = (await mdbCollections.clientUsers.insertOne(user)).insertedId;
     }
     const newToken = createToken(user._id);

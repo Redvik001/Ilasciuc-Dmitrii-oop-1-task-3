@@ -25,3 +25,18 @@ export const cookiesDefaultOptions = {
     sameSite: "lax",
     httpOnly: true
 } as const;
+
+
+export const tamagotchiMinIntervals = {
+    dog: {
+        walking: 6,
+        feeding: 4
+    },
+    cat: {
+        walking: 3,
+        feeding: 5
+    },
+    parrot: {
+        feeding: 3
+    }
+}

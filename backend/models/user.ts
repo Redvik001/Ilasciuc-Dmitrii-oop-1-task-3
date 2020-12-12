@@ -1,7 +1,7 @@
 import { ObjectId } from "mongodb";
 
 
-export class ClientUser {
+export class User {
     _id: ObjectId;
     token: string = null;
     email: string;

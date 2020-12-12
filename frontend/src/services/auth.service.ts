@@ -43,7 +43,6 @@ export class AuthService {
     private onMessage = (event: MessageEvent) => {
         if (event.origin === environment.backendAddress) {
             localStorage.setItem("token", event.data);
-            console.log(this.blockedUrl)
             this.router.navigate([this.blockedUrl]);
         }
     };

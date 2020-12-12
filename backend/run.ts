@@ -1,17 +1,21 @@
 import cors from "cors";
 import { app, connectToMongoDb } from "./app";
-import { clientRouter } from "./routes/client";
+import { authRouter } from "./routes/auth";
 import { cookiesDefaultOptions, serverConfig } from "./config";
 import cookieSession from "cookie-session";
+import { tamagotchiRouter } from "./routes/tamagotchi";
+import { json } from "express";
 
 app.use(cookieSession({
     name: "backendSession",
     secret: "2358143f-7e84-4cf5-a059-46c6aa8d1f9d",
     ...cookiesDefaultOptions
 }));
+app.use(json());
 app.use(cors());
 
-app.use("/client", clientRouter);
+app.use("/auth", authRouter);
+app.use("/user", tamagotchiRouter);
 
 // app.get("/", async (req: Request, resp: Response) => {
 //     const postsCollection = mdb.collection("posts");

@@ -4,7 +4,8 @@ import { MongoClient, Db, Collection } from "mongodb";
 import { mdbConnectionString } from "./config";
 import 'source-map-support/register';
 import sourceMapSupport from 'source-map-support';
-import { ClientUser } from "./models/clientUser";
+import { User } from "./models/user";
+import { Tamagotchi } from "./models/tamagotchi";
 
 sourceMapSupport.install({
     environment: 'node',
@@ -15,7 +16,8 @@ export let app = express();
 export let mdbClient: MongoClient;
 export let mdb: Db;
 export let mdbCollections: {
-    clientUsers: Collection<ClientUser>;
+    clientUsers: Collection<User>;
+    tamagotchies: Collection<Tamagotchi>;
 }
 
 
@@ -27,6 +29,7 @@ export async function connectToMongoDb() {
     await mdbClient.connect();
     mdb = mdbClient.db();
     mdbCollections = {
-        clientUsers: mdb.collection<ClientUser>("clientUsers")
+        clientUsers: mdb.collection<User>("clientUsers"),
+        tamagotchies: mdb.collection<Tamagotchi>("tamagotchies")
     }
 }
